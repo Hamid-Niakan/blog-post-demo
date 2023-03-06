@@ -52,7 +52,7 @@
           Share a reply?
         </h3>
 
-        <textarea v-model="comment" class="mt-3 mb-5" placeholder="your message... (hit Enter to send)" @keydown.enter="postComment"></textarea>
+        <textarea v-model="comment" class="mt-3 mb-5" placeholder="your message... (hit Enter to send)" @keydown.enter="postComment(1)"></textarea>
 
         <AppComment v-for="({ username, text, date }, i) in post.comments"
         :key="`comment-${i}`"
@@ -135,6 +135,7 @@ export default {
     },
     async postComment(postId) {
       try {
+        if (!this.comment) throw new Error('you forgot to type the comment');
         const { status } = await this.axios.post(`/posts/${postId}/comment`, {
           text: this.comment
         })
