@@ -135,7 +135,8 @@ export default {
     },
     async postComment(postId) {
       try {
-        if (!this.comment) throw new Error('you forgot to type the comment');
+        if (typeof this.comment !== 'string' || this.comment.trim().length === 0)
+          throw new Error('you forgot to type the comment')
         const { status } = await this.axios.post(`/posts/${postId}/comment`, {
           text: this.comment
         })
