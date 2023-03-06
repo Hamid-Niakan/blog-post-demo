@@ -52,7 +52,10 @@
           Share a reply?
         </h3>
 
-        <textarea v-model="comment" class="mt-3 mb-5" placeholder="your message... (hit Enter to send)" @keydown.enter="postComment(1)"></textarea>
+        <div v-if="isPostingComment" class="loading--mini">
+          Posting Comment...
+        </div>
+        <textarea v-else v-model="comment" class="mt-3 mb-5" placeholder="your message... (hit Enter to send)" @keydown.enter="postComment(1)"></textarea>
 
         <AppComment v-for="({ username, text, date }, i) in post.comments"
         :key="`comment-${i}`"
@@ -117,7 +120,8 @@ export default {
     return {
       post: null,
       comment: null,
-      links: ['About', 'Community']
+      links: ['About', 'Community'],
+      isPostingComment: false,
     }
   },
   created() {
@@ -137,6 +141,7 @@ export default {
       try {
         if (typeof this.comment !== 'string' || this.comment.trim().length === 0)
           throw new Error('you forgot to type the comment')
+          this.isPostingComment = true;
         const { status } = await this.axios.post(`/posts/${postId}/comment`, {
           text: this.comment
         })
@@ -150,6 +155,8 @@ export default {
         this.comment = null
       } catch (e) {
         alert(e.message)
+      } finally {
+        this.isPostingComment = false;
       }
     }
   }
@@ -166,6 +173,13 @@ export default {
 
 .loading {
   height: 100vh;
+  font-weight: bold;
+  font-size: 30px;
+  margin-top: 5vh;
+}
+
+.loading--mini {
+  width: 100%;
   font-weight: bold;
   font-size: 30px;
   margin-top: 5vh;
