@@ -1,0 +1,18 @@
+<template>
+  <i>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M9.71729 5L3.00021 12L9.71729 19" stroke="#FCFCFC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="1" y1="-1" x2="16.7331" y2="-1" transform="matrix(1 0 0 -1 3.26709 11.0317)" stroke="#FCFCFC" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+  </i>
+</template>
+
+<style scoped>
+i {
+  display: flex;
+  place-items: center;
+  place-content: center;
+  width: 32px;
+  height: 32px;
+}
+</style>
